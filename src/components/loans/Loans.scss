@@ -20,6 +20,11 @@
       &:not(:last-child){
          margin-bottom: 20px;
       }
+      span{
+         color: teal;
+         text-align: end;
+         font-weight: bold;
+      }
    }
    .buttons{
       display: flex;

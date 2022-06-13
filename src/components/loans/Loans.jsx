@@ -9,8 +9,8 @@ const Loans = ({ data }) => {
 function changeTotal (e) {
  console.log(e);
 }
-  const loanList = data.map((item, i) => {
-    return <LoansItem data={item} key={i} changeTotal={setTotal} total={total} />;
+  const loanList = data.map((item) => {
+    return <LoansItem data={item} key={item.id} changeTotal={changeTotal} />;
   });
 
   return (

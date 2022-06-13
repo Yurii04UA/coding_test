@@ -1,12 +1,32 @@
-.modalWindow{
+.modalWindow {
    color: red;
    border: 1px solid rgba(128, 128, 128, 0.35);
    border-radius: 5px;
    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
    padding: 20px;
    margin: 0 auto;
-   .close{
+
+   .close {
       position: relative;
       left: 85%;
+   }
+   form div{
+      display: flex;
+      justify-content: space-between;
+   }
+
+   input[type="number"]::-webkit-outer-spin-button,
+   input[type="number"]::-webkit-inner-spin-button {
+      -webkit-appearance: none; 
+   }
+   input[type='number'],
+   input[type="number"]:hover,
+   input[type="number"]:focus {
+      appearance: none;
+      -moz-appearance: textfield;
+   }
+   input{
+     
+      line-height: 34px;
    }
 }

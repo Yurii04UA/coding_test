@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from "react";
 import "./LoansItem.scss";
 
-const LoansItem = ({ data }) => {
-  const { title, id, setTotal } = data;
-  const [amount, setAmount] = useState(Number(data.amount.replace(",","")));
-  const [available, setAviable] = useState(Number(data.available.replace(",","")));
+const LoansItem = ({ data,changeTotal}) => {
+  const { title, id } = data;
+  const [amount, setAmount] = useState(Number(data.amount.replace(",", "")));
+  const [available, setAviable] = useState(
+    Number(data.available.replace(",", ""))
+  );
   const [term, setTerm] = useState((data.term_remaining / 86400).toFixed(1));
 
-  
   const [value, setValue] = useState("");
   const [showModal, setShowModal] = useState(false);
-
+  const [invest, setInvest] = useState(false);
+  const [btnDisabled, setBtnDisabled] = useState(true);
 
   const openModal = () => {
     setShowModal(true);
@@ -19,21 +21,29 @@ const LoansItem = ({ data }) => {
     setShowModal(false);
   };
   const changeValue = (e) => {
-    setValue(+e.target.value);    
+    setValue(+e.target.value);
   };
 
-  useEffect(()=>{
-    if(value > amount){
-      console.log('you have exceeded the limit')
+  // limit check
+  useEffect(() => {
+    if (value > amount) {
+      console.log("you have exceeded the limit");
     }
-  },[value])
+    if (value > 0) {
+      setBtnDisabled(false);
+    } else if (value <= 0) {
+      setBtnDisabled(true);
+    }
+  }, [value]);
 
-  const handleSubmit = (e) =>{
-    e.preventDefault()
-    setAmount(amount => amount- value)
-    setAviable(available => available + value)
-    setValue('')
-  }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setAmount((amount) => amount - value);
+    setAviable((available) => available + value);
+    setInvest(true);
+    changeTotal('aaaaaaaaaaa')
+    setValue("");
+  };
 
   const ModalWindow = () => {
     return (
@@ -51,21 +61,25 @@ const LoansItem = ({ data }) => {
         <p>{title}</p>
         <p>Amount available ${available}</p>
         <p>Loan ends in : {term} days</p>
-        
+
         <form>
           <h4>Investment amount</h4>
-          <input
-            autoFocus
-            value={value}
-            className="input-group-sm"
-            type="number"
-          
-            onChange={changeValue}
-          />
-          <button className="btn btn-warning"
-            onClick={handleSubmit}
-          
-          >ivest</button>
+          <div>
+            <input
+              autoFocus
+              value={value}
+              className="input-group-sm"
+              type="number"
+              onChange={changeValue}
+            />
+            <button
+              className="btn btn-warning"
+              onClick={handleSubmit}
+              disabled={btnDisabled}
+            >
+              INVEST
+            </button>
+          </div>
         </form>
       </div>
     );
@@ -80,7 +94,8 @@ const LoansItem = ({ data }) => {
           <p>available amount : ${available}</p>
         </div>
         <div className="buttons">
-          <span>invest</span>
+          {invest ? <span>invest</span> : null}
+
           <button className="btn btn-warning" onClick={openModal}>
             INVEST
           </button>
