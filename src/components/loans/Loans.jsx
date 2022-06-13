@@ -3,12 +3,14 @@ import LoansItem from "../loanItem/LoansItem";
 import "./Loans.scss";
 
 const Loans = ({ data }) => {
-  const [total, useTotal] = useState(238456);
+  const [total, setTotal] = useState(238456);
  console.log(data);
 
-
+function changeTotal (e) {
+ console.log(e);
+}
   const loanList = data.map((item, i) => {
-    return <LoansItem data={data[i]} key={i} />;
+    return <LoansItem data={item} key={i} changeTotal={setTotal} total={total} />;
   });
 
   return (
