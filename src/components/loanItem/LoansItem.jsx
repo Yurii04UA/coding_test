@@ -42,12 +42,10 @@ const LoansItem = ({ data, changeTotal, total }) => {
     if (value > total) {
       setGuardTotal(true);
       setBtnDisabled(true);
-    }else if(value< amount){
+    } else if (value < amount) {
       setGuardTotal(false);
-
     }
   }, [value]);
-
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -61,44 +59,50 @@ const LoansItem = ({ data, changeTotal, total }) => {
 
   const ModalWindow = () => {
     return (
-      <div className="modalWindow w-75">
-        <button
-          type="button"
-          className="close btn"
-          data-dismiss="modal"
-          aria-label="Close"
-          onClick={isShowModal}
-        >
-          <span aria-hidden="true">X</span>
-        </button>
-        <h2>Invest in Loan {id}</h2>
-        <p>{title}</p>
-        <p>Amount available ${available}</p>
-        <p>Loan ends in : {term} days</p>
+      <div className="wraperModal">
+        <div className="modalWindow w-75">
+          <button
+            type="button"
+            className="close btn"
+            data-dismiss="modal"
+            aria-label="Close"
+            onClick={isShowModal}
+          >
+            <span aria-hidden="true">X</span>
+          </button>
+          <h2>Invest in Loan {id}</h2>
+          <p>{title}</p>
+          <p>Amount available ${available}</p>
+          <p>Loan ends in : {term} days</p>
 
-        <form>
-          <h4>Investment amount</h4>
-          <div>
-            <input
-              autoFocus
-              value={value}
-              className="input-group-sm"
-              type="number"
-              onChange={changeValue}
-            />
-            <button
-              className="btn btn-warning"
-              onClick={handleSubmit}
-              disabled={btnDisabled}
-            >
-              INVEST
-            </button>
-          </div>
-        </form>
-        {guardAmount ? (
-          <p className="error">investment limit exceeded</p>
-        ) : null}
-        {guardTotal? <p className="error">your total investment amount has been exceeded</p>: null}
+          <form>
+            <h4>Investment amount</h4>
+            <div>
+              <input
+                autoFocus
+                value={value}
+                className="input-group-sm"
+                type="number"
+                onChange={changeValue}
+              />
+              <button
+                className="btn btn-warning"
+                onClick={handleSubmit}
+                disabled={btnDisabled}
+              >
+                INVEST
+              </button>
+            </div>
+          </form>
+          {guardAmount ? (
+            <p className="error">investment limit exceeded</p>
+          ) : null}
+          {guardTotal ? (
+            <p className="error">
+              your total investment amount has been exceeded
+            </p>
+          ) : null}
+        </div>
       </div>
     );
   };
@@ -119,6 +123,7 @@ const LoansItem = ({ data, changeTotal, total }) => {
           </button>
         </div>
       </li>
+
       {showModal ? <ModalWindow /> : null}
     </>
   );
