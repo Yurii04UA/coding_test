@@ -48,7 +48,7 @@ const LoansItem = ({ data, changeTotal, total }) => {
     }
   }, [value]);
 
-  
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setAmount((amount) => amount - value);
