@@ -70,8 +70,8 @@ const LoansItem = ({ data, changeTotal, total }) => {
           >
             <span aria-hidden="true">X</span>
           </button>
-          <h2>Invest in Loan {id}</h2>
-          <p>{title}</p>
+          <h2 >Invest in Loan {id}</h2>
+          <p className="title">{title}</p>
           <p>Amount available ${available}</p>
           <p>Loan ends in : {term} days</p>
 
