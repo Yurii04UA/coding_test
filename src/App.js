@@ -1,4 +1,4 @@
-import './App.css';
+import './App.scss';
 import data from './data/current-loans.json'
 import Loans from './components/loans/Loans.jsx'
 

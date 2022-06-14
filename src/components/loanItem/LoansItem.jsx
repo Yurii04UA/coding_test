@@ -19,6 +19,7 @@ const LoansItem = ({ data, changeTotal, total }) => {
 
   const isShowModal = () => {
     setShowModal(!showModal);
+    setValue("");
   };
   const changeValue = (e) => {
     setValue(+e.target.value);
@@ -73,6 +74,7 @@ const LoansItem = ({ data, changeTotal, total }) => {
           <h2 >Invest in Loan {id}</h2>
           <p className="title">{title}</p>
           <p>Amount available ${available}</p>
+          <p>Available credit limit : ${amount}</p>
           <p>Loan ends in : {term} days</p>
 
           <form>
@@ -95,11 +97,12 @@ const LoansItem = ({ data, changeTotal, total }) => {
             </div>
           </form>
           {guardAmount ? (
-            <p className="error">investment limit exceeded</p>
+            <p className="error">Investment limit exceeded</p>
           ) : null}
           {guardTotal ? (
             <p className="error">
-              your total investment amount has been exceeded
+              Your total investment amount has been exceeded.<br/>
+              Available amount: ${total}
             </p>
           ) : null}
         </div>
