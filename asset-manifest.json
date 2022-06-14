@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/coding_test/static/css/main.d7dd5d9a.css",
+    "main.js": "/coding_test/static/js/main.f37859db.js",
+    "index.html": "/coding_test/index.html",
+    "main.d7dd5d9a.css.map": "/coding_test/static/css/main.d7dd5d9a.css.map",
+    "main.f37859db.js.map": "/coding_test/static/js/main.f37859db.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.d7dd5d9a.css",
+    "static/js/main.f37859db.js"
+  ]
+}
