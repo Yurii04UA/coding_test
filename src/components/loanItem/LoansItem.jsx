@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./LoansItem.scss";
 
-const LoansItem = ({ data,changeTotal}) => {
+const LoansItem = ({ data, changeTotal, total }) => {
   const { title, id } = data;
   const [amount, setAmount] = useState(Number(data.amount.replace(",", "")));
   const [available, setAviable] = useState(
@@ -13,12 +13,12 @@ const LoansItem = ({ data,changeTotal}) => {
   const [showModal, setShowModal] = useState(false);
   const [invest, setInvest] = useState(false);
   const [btnDisabled, setBtnDisabled] = useState(true);
+  // checking limits for investment
+  const [guardAmount, setGuardAmount] = useState(false);
+  const [guardTotal, setGuardTotal] = useState(false);
 
-  const openModal = () => {
-    setShowModal(true);
-  };
-  const closeModal = () => {
-    setShowModal(false);
+  const isShowModal = () => {
+    setShowModal(!showModal);
   };
   const changeValue = (e) => {
     setValue(+e.target.value);
@@ -26,23 +26,37 @@ const LoansItem = ({ data,changeTotal}) => {
 
   // limit check
   useEffect(() => {
-    if (value > amount) {
-      console.log("you have exceeded the limit");
-    }
+    // disabled btn at the beginning
     if (value > 0) {
       setBtnDisabled(false);
     } else if (value <= 0) {
       setBtnDisabled(true);
     }
+    // disabled btn from limits
+    if (value > amount) {
+      setGuardAmount(true);
+      setBtnDisabled(true);
+    } else if (value < amount) {
+      setGuardAmount(false);
+    }
+    if (value > total) {
+      setGuardTotal(true);
+      setBtnDisabled(true);
+    }else if(value< amount){
+      setGuardTotal(false);
+
+    }
   }, [value]);
 
+  
   const handleSubmit = (e) => {
     e.preventDefault();
     setAmount((amount) => amount - value);
     setAviable((available) => available + value);
     setInvest(true);
-    changeTotal('aaaaaaaaaaa')
+    changeTotal(value);
     setValue("");
+    isShowModal();
   };
 
   const ModalWindow = () => {
@@ -53,7 +67,7 @@ const LoansItem = ({ data,changeTotal}) => {
           className="close btn"
           data-dismiss="modal"
           aria-label="Close"
-          onClick={closeModal}
+          onClick={isShowModal}
         >
           <span aria-hidden="true">X</span>
         </button>
@@ -81,6 +95,10 @@ const LoansItem = ({ data,changeTotal}) => {
             </button>
           </div>
         </form>
+        {guardAmount ? (
+          <p className="error">investment limit exceeded</p>
+        ) : null}
+        {guardTotal? <p className="error">your total investment amount has been exceeded</p>: null}
       </div>
     );
   };
@@ -91,42 +109,17 @@ const LoansItem = ({ data,changeTotal}) => {
         <div>
           <h2>Loan name {id} </h2>
           <p>Available credit limit : ${amount}</p>
-          <p>available amount : ${available}</p>
+          <p>Available amount : ${available}</p>
         </div>
         <div className="buttons">
           {invest ? <span>invest</span> : null}
 
-          <button className="btn btn-warning" onClick={openModal}>
+          <button className="btn btn-warning" onClick={isShowModal}>
             INVEST
           </button>
         </div>
       </li>
       {showModal ? <ModalWindow /> : null}
-      {/* <div className="modalWindow w-75">
-        <button
-          type="button"
-          className="close btn"
-          data-dismiss="modal"
-          aria-label="Close"
-          onClick={()=>setShowModal(false)}
-        >
-          <span aria-hidden="true">X</span>
-        </button>
-        <h2>Invest in Loan {id}</h2>
-        <p>{title}</p>
-        <p>Amount available ${available}</p>
-        <p>Loan ends in : {term} days</p>
-        <form>
-          <h4>Investment amount</h4>
-          <input value={value} 
-            className="input-group-sm" 
-            type="number"
-            min={1}
-            onChange={(e) => setValue(e.target.value)}
-            />
-          <button className="btn btn-warning">ivest</button>
-        </form>
-      </div> */}
     </>
   );
 };
